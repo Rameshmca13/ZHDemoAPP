@@ -19,6 +19,8 @@ class HomeVC: UIViewController,UITableViewDelegate,UITableViewDataSource,NVActiv
     // var client: TwitterClient!
     var refreshControl: UIRefreshControl!
     
+    
+    var timelineListFromCoreData = [Timeline]()
     var tweets: [Tweet]?
     var arrlistCount = 0
 
@@ -69,6 +71,16 @@ class HomeVC: UIViewController,UITableViewDelegate,UITableViewDataSource,NVActiv
     override func viewDidLoad() {
         super.viewDidLoad()
         // TWTRUser *user = [[TWTRUser alloc] initWithJSONDictionary:userDict];
+        
+       
+        timelineListFromCoreData = CoreDataHandler.retrieveHomeTimeline() as! [Timeline]
+        if timelineListFromCoreData.count == 0 {
+            
+        }else{
+            
+        }
+       
+        
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "refresh")
         refreshControl.addTarget(self, action:#selector(getTimeLine), for: .valueChanged)

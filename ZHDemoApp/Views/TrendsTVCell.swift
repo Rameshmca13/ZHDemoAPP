@@ -10,6 +10,7 @@ import UIKit
 
 class TrendsTVCell: UITableViewCell {
 
+    @IBOutlet weak var lblName: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

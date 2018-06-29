@@ -5,3 +5,9 @@
   Created by Ramesh P on 24/06/18.
   Copyright © 2018 Ramesh P. All rights reserved.
 */
+
+
+
+"LOGINFAILED" = "Login Failed , Please try agian later";
+"CHECKNET" = "please check your internet connection";
+"ERROR" = "Please try agin later";

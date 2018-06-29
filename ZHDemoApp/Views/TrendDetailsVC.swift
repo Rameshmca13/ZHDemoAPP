@@ -10,8 +10,17 @@ import UIKit
 
 class TrendDetailsVC: UIViewController {
 
+    @IBOutlet weak var webView: UIWebView!
+    var urlString =  String()
     override func viewDidLoad() {
         super.viewDidLoad()
+//        var url = NSURL (string: urlString);
+//        let request = NSURLRequest.init(url: url as! URL)
+//        webView.loadRequest(request as URLRequest);
+        print(urlString)
+        let url = NSURL (string: urlString);
+        let requestObj = NSURLRequest.init(url: url as! URL)
+        webView.loadRequest(requestObj as URLRequest);
 
         // Do any additional setup after loading the view.
     }

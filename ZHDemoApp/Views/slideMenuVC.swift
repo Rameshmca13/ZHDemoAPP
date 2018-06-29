@@ -15,8 +15,6 @@ class slideMenuVC: UIViewController,UITableViewDelegate, UITableViewDataSource, 
     private var previousIndex: NSIndexPath?
     var arrMenuItems: [String] = ["Search", "Home", "Profile", "Trending", "Logout"]
     
-  
-
     @IBOutlet weak var menuTableview: UITableView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var imgProfile: UIImageView!

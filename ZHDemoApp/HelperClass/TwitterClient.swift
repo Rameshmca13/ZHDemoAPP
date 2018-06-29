@@ -27,8 +27,13 @@ class TwitterClient : NSObject {
                  do {
                     if data != nil{
                         let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                        let json3 = json as! Array<Any>
+                        let coredata = CoreDataHandler()
+                        coredata.insertTimelineContent(arraylist: json3)
+                        
                             let json1 = json as! NSArray
                             let Dict = Tweet.tweetsWithArray(dictionaries: [json1])
+                      
                          successs(Dict)
                     }else{
                         failure(connectionError! as NSError)
@@ -51,6 +56,7 @@ class TwitterClient : NSObject {
             let request = client.urlRequest(withMethod: "GET", url: statusesShowEndpoint, parameters: nil, error: &clientError)
             client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 if connectionError != nil {
+                    
                     failure(connectionError! as NSError)
                 }
                 do {
@@ -121,8 +127,46 @@ class TwitterClient : NSObject {
                     if data != nil{
                         let json = try JSONSerialization.jsonObject(with: data!, options: [])
                         let json1 = json as! NSDictionary
-                        let Value = json1 .value(forKey: "statuses")
-                        let Dict = Tweet.tweetsWithArray(dictionaries:Value as! [NSArray])
+                        print(json1)
+                        let Value = json1 .value(forKey: "statuses") as? NSArray
+                        print(Value)
+                        let Dict = Tweet.tweetsWithArray1(dictionaries:Value as! [NSDictionary])
+                        successs(Dict)
+                    }else{
+                        failure(connectionError! as NSError)
+                    }
+                    
+                } catch let jsonError as NSError {
+                    failure(jsonError)
+                    print("json error: \(jsonError.localizedDescription)")
+                    
+                }
+            }
+        }
+    }
+    class func requestTrends(method: String, successs: @escaping ([Trends]) -> (), failure: @escaping (NSError) -> ()){
+        if let userID = Twitter.sharedInstance().sessionStore.session()?.userID {
+            let client = TWTRAPIClient(userID: userID)
+           // let userID = UserDefaults_Obj().value(forKey: userID)
+            let params: NSDictionary = [
+                "id": "1"
+            ]
+          //  UserDefaults_Obj().value(forKey: USER_ID) ?? String()
+            
+            let statusesShowEndpoint = twitterBaseURL + method
+            var clientError : NSError?
+            let request = client.urlRequest(withMethod: "GET", url: statusesShowEndpoint, parameters: params as? [AnyHashable : Any], error: &clientError)
+                client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+                if connectionError != nil {
+                     print("Error: \(connectionError)")
+                    failure(connectionError! as NSError)
+                }
+                do {
+                    if data != nil{
+                        let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                       // let json1 = json as! NSDictionary
+                        let json2 = json as! NSArray
+                        let Dict = Trends.trendsWithArray(dictionaries: [json2])
                         successs(Dict)
                     }else{
                         failure(connectionError! as NSError)
@@ -137,37 +181,5 @@ class TwitterClient : NSObject {
         }
     }
     
-    
-    
 }
-
-
-
-//if let userID = Twitter.sharedInstance().sessionStore.session()?.userID {
-//    let client = TWTRAPIClient(userID: userID)
-//
-//    let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-//    let params = ["id": "20"]
-//    var clientError : NSError?
-//
-//    let request = client.urlRequest(withMethod: "GET", url: statusesShowEndpoint, parameters: nil, error: &clientError)
-//
-//    client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
-//        if connectionError != nil {
-//            print("Error: \(connectionError)")
-//        }
-//
-//        do {
-//            print(response)
-//            print(data)
-//            let json = try JSONSerialization.jsonObject(with: data!, options: [])
-//            print("json: \(json)")
-//        } catch let jsonError as NSError {
-//            print("json error: \(jsonError.localizedDescription)")
-//        }
-//    }
-//
-//
-//}
-
 

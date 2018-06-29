@@ -54,7 +54,7 @@ class Tweet: NSObject {
     }
     
     class func tweetsWithArray(dictionaries: [NSArray]) -> [Tweet] {
-        print(dictionaries)
+       print(dictionaries)
         var tweets = [Tweet]()
         var TweetsCount = 0
         for dictValue in dictionaries{
@@ -67,12 +67,35 @@ class Tweet: NSObject {
             
         }
         print(TweetsCount)
-        
-//        for dictionary in dictionaries {
-//            let tweet = Tweet(dictionary: dictionary)
-//            tweets.append(tweet)
+
 //        }
         return tweets
     }
     
+    
+    class func tweetsWithArray1(dictionaries: [NSDictionary]) -> [Tweet] {
+        var tweets = [Tweet]()
+        
+        for dictionary in dictionaries {
+            let tweet = Tweet(dictionary: dictionary)
+            tweets.append(tweet)
+        }
+        return tweets
+    }
+//    class func tweetsWithArray1(dictionaries: [NSArray]) -> [Tweet] {
+//         var tweets = [Tweet]()
+//            var TweetsCount = 0
+//           for dictLocal in dictionaries{
+//                TweetsCount = TweetsCount + 1
+//                let tweet = Tweet(dictionary: dictLocal as! NSDictionary)
+//                tweets.append(tweet)
+//
+//
+//
+//        }
+//        print(TweetsCount)
+//
+//        //        }
+//        return tweets
+//    }
 }

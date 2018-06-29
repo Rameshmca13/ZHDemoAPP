@@ -8,6 +8,9 @@
 
 import UIKit
 import CoreData
+import TwitterKit
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +20,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+       
+        
+        Twitter.sharedInstance().start(withConsumerKey: "9KNfFrPf8JCznUvmq2pOaOJNv", consumerSecret: "X4p19fO0B0Srh6GJuQBpCWMhoYEsCqC5ET4Su2RvYwti1bTC4I")
+      
+        if (UserDefaults.standard.value(forKey: USER_ID) != nil)
+        {
+            let story = UIStoryboard.init(name: "Main", bundle: nil)
+            let HomeVC = story.instantiateViewController(withIdentifier: "HomeVC")as! HomeVC
+            let navigationController = UINavigationController(rootViewController: HomeVC)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+        }
+       
+        UINavigationBar.appearance().barTintColor = UIColor(red: 56/255, green: 84/255, blue: 136/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+   
+        
         return true
+    }
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+         return Twitter.sharedInstance().application(app, open: url, options: options)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -45,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Core Data stack
+    
 
     lazy var persistentContainer: NSPersistentContainer = {
         /*
@@ -72,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
-
+  
     // MARK: - Core Data Saving support
 
     func saveContext () {
